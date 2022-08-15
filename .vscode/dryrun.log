@@ -1,0 +1,8 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/inge-tim2/Documents/Prog/C++/Puissance4'
+ 
+g++ -std=c++11 -Wall -o obj/Power4.o -c src/Power4.cpp
+g++ -std=c++11 -Wall -o obj/main.o -c src/main.cpp
+g++ -std=c++11 -Wall -o Puissance4 obj/Power4.o obj/main.o 
+make: Leaving directory '/home/inge-tim2/Documents/Prog/C++/Puissance4'
+ 
