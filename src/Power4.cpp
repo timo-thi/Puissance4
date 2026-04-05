@@ -1,4 +1,5 @@
 #include "include/Power4.hpp"
+#include <system_error>
 
 void Power4::show_game() {
     std::cout << "  a ° b ° c ° d ° e ° f ° g \n";
@@ -9,9 +10,6 @@ void Power4::show_game() {
         }
         std::cout << "\n";
     }
-    std::cout << "show_game_end\n";
-
-    return;
 }
 
 int Power4::ask_for_entry(int player_num) {
@@ -42,18 +40,19 @@ int Power4::get_line(int column_index) {
     return -1;
 }
 
-void Power4::update_column(int choice_index, int player_num) {
+int Power4::update_column(int choice_index, int player_num) {
+    int line = get_line(choice_index);
     if (player_num == 1) {
-        grid[choice_index][get_line(choice_index)] = player1;
+        grid[choice_index][line] = player1;
     } else if (player_num == 2) {
-        grid[choice_index][get_line(choice_index)] = player2;
+        grid[choice_index][line] = player2;
     } else {
-        printf("update_column error, player is not 1 or 2.");
+        throw std::errc::illegal_byte_sequence;
     }
+    return line;
 }
 
 bool Power4::win_check_handler(int col, int row) {
-    std::cout << "win_check_handler in";
     std::vector<char> line = get_row(row);
     std::vector<char> column = get_column(col);
     std::vector<char> diag_up = get_diag_up(col, row);
@@ -89,7 +88,7 @@ std::vector<char> Power4::get_diag_up(int col, int row) {
         nb_v = 7 - lini;
     } else {
         coli = 0;
-        coli = 0;
+        lini = 0;
         nb_v = 6;
     }
 
@@ -135,9 +134,8 @@ std::vector<char> Power4::get_column(int col) {
 
 std::vector<char> Power4::get_row(int row) {
     std::vector<char> line;
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 7; i++) {
         line.push_back(grid[i][row]);
     }
-    std::cout << "ok";
     return line;
 }

@@ -1,15 +1,18 @@
 #include "include/Power4.hpp"
 
 int main() {
-    Power4 Game;
-    Game.show_game();
-    Game.update_column(Game.ask_for_entry(1), 1);
-    Game.show_game();
+    Power4 Game;    int max_turns = 42;
 
-    std::cout << "ok\n";
-
-    std::cout << Game.win_check_handler(1, 1);
-    // printf("size : %ld", sizeof(test));
+    for (int i = 0; i < max_turns; i++) {
+        int currentPlayer = i % 2 + 1;
+        int col = Game.ask_for_entry(currentPlayer);
+        int row = Game.update_column(col, currentPlayer);
+        Game.show_game();
+        if (Game.win_check_handler(col, row)) {
+            std::cout << "Player " << i % 2 + 1 << " wins!" << std::endl;
+            return 0;
+        }
+    }
 
     return 0;
 }
