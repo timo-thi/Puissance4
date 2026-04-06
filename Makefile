@@ -3,9 +3,13 @@
 ########################################################################
 
 # Compiler settings - Can be customized.
-CC = g++
+CXX = g++
 CXXFLAGS = -std=c++11 -Wall
-LDFLAGS = 
+LDFLAGS =
+
+# Add sdl3 dependecy
+CXXFLAGS += $(shell pkg-config sdl3 --cflags)
+LDFLAGS  += $(shell pkg-config sdl3 --libs)
 
 # Makefile settings - Can be customized.
 APPNAME = Puissance4
@@ -33,7 +37,7 @@ all: $(APPNAME)
 
 # Builds the app
 $(APPNAME): $(OBJ)
-	$(CC) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
 # Creates the dependecy rules
 %.d: $(SRCDIR)/%$(EXT)
@@ -44,7 +48,7 @@ $(APPNAME): $(OBJ)
 
 # Building rule for .o files and its .c/.cpp in combination with all .h
 $(OBJDIR)/%.o: $(SRCDIR)/%$(EXT)
-	$(CC) $(CXXFLAGS) -o $@ -c $<
+	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 ################### Cleaning rules for Unix-based OS ###################
 # Cleans complete project
